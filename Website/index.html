@@ -33,12 +33,29 @@
             <p>Click below to learn more about our community-driven mission.</p>
             
             <!-- Clickable Image -->
-            <a href="about.html">
-                <img
-                    src="images/EC_logo.png"
-                    alt="Eastern Cape Youth Skills Hub"
-                    class="hub-logo">
-            </a>
+<a href="about.html">
+    <picture>
+        <!-- Image choices for mobile screens -->
+        <source
+            media="(max-width: 40rem)"
+            srcset="
+                images/EC_logo-small.png 352w,
+                images/EC_logo-medium.png 704w"
+            sizes="min(22rem, calc(90vw - 2.5rem - 2px))">
+
+        <!-- Default image choices for larger screens -->
+        <img
+            src="images/EC_logo-medium.png"
+            srcset="
+                images/EC_logo-small.png 352w,
+                images/EC_logo-medium.png 704w"
+            sizes="
+                (max-width: 64rem) min(22rem, calc(45vw - 3.625rem - 2px)),
+                22rem"
+            alt="Eastern Cape Youth Skills Hub"
+            class="hub-logo">
+    </picture>
+</a>
         </section>
     </main>
 
