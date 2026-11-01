@@ -163,3 +163,106 @@ function initialiseProgrammeFaqs() {
     }
 
     initialiseGallery();
+    function initialiseEnquiryForm() {
+    const form = document.querySelector("#enquiry-form");
+
+    if (!form) {
+        return;
+    }
+
+    const nameInput = document.querySelector("#enquiry-name");
+    const emailInput = document.querySelector("#enquiry-email");
+    const interestInput = document.querySelector("#enquiry-interest");
+    const messageInput = document.querySelector("#enquiry-message");
+    const checkButton = document.querySelector("#enquiry-check");
+    const result = document.querySelector("#enquiry-result");
+
+    if (
+        !nameInput ||
+        !emailInput ||
+        !interestInput ||
+        !messageInput ||
+        !checkButton ||
+        !result
+    ) {
+        return;
+    }
+
+    const responses = {
+        computer:
+            "Computer Literacy covers essential digital skills, software navigation, and basic troubleshooting.",
+        job:
+            "Job Readiness covers CV preparation, interview techniques, and workplace communication.",
+        business:
+            "Entrepreneurship introduces starting, managing, and growing a small business.",
+        volunteer:
+            "For a volunteering enquiry, describe the skills you could share and the times you would be available.",
+        sponsor:
+            "For a sponsorship enquiry, describe the support you could offer, such as equipment, learning resources, or funding."
+    };
+
+    // We trigger the browser's validation messages from JavaScript.
+    form.noValidate = true;
+
+    form.addEventListener("submit", (event) => {
+        // This step checks the enquiry locally; it does not send it.
+        event.preventDefault();
+        result.replaceChildren();
+
+        nameInput.value = nameInput.value.trim();
+        emailInput.value = emailInput.value.trim();
+        messageInput.value = messageInput.value.trim();
+
+        nameInput.setCustomValidity(
+            nameInput.value.length < 2
+                ? "Please enter a name containing at least 2 characters."
+                : ""
+        );
+
+        messageInput.setCustomValidity(
+            messageInput.value.length < 10
+                ? "Please enter at least 10 characters explaining your enquiry."
+                : ""
+        );
+
+        interestInput.setCustomValidity(
+            Object.hasOwn(responses, interestInput.value)
+                ? ""
+                : "Please select an enquiry option."
+        );
+
+        // Checks required fields, email format, and custom rules.
+        if (!form.reportValidity()) {
+            return;
+        }
+
+        const heading = document.createElement("h3");
+        heading.textContent = "Your enquiry details are valid";
+
+        const guidance = document.createElement("p");
+        guidance.textContent = responses[interestInput.value];
+
+        const availability = document.createElement("p");
+        availability.textContent =
+            "Dates, fees, available places, and participation arrangements must be confirmed with the Hub.";
+
+        const notice = document.createElement("p");
+        notice.textContent =
+            "This is a local preview. Your enquiry has not been sent or saved.";
+
+        result.append(heading, guidance, availability, notice);
+    });
+
+    // Remove old validation messages as the user corrects a field.
+    form.addEventListener("input", (event) => {
+        if (typeof event.target.setCustomValidity === "function") {
+            event.target.setCustomValidity("");
+        }
+
+        result.replaceChildren();
+    });
+
+    checkButton.disabled = false;
+}
+
+initialiseEnquiryForm();
