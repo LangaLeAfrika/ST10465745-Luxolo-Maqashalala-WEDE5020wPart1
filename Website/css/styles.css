@@ -496,3 +496,97 @@ main img.hub-logo {
         transition: none;
     }
 }
+/* Part 3: gallery and lightbox */
+.programme-gallery {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.gallery-link {
+    display: block;
+    min-width: 0;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    background-color: var(--background);
+    text-align: center;
+    font-weight: 700;
+}
+
+.gallery-link img {
+    width: 100%;
+    height: 12rem;
+    margin: 0 0 1rem;
+    object-fit: contain;
+}
+
+.gallery-link:hover {
+    background-color: #e0ebe5;
+}
+
+#image-lightbox {
+    width: 90%;
+    max-width: 55rem;
+    max-height: 90vh;
+    margin: auto;
+    padding: 1.25rem;
+    overflow: auto;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    background-color: var(--surface);
+    color: var(--text);
+}
+
+#image-lightbox::backdrop {
+    background-color: rgb(0 0 0 / 75%);
+}
+
+.lightbox-controls {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 0 1rem;
+}
+
+#lightbox-image {
+    width: 100%;
+    max-height: 65vh;
+    height: auto;
+    object-fit: contain;
+}
+
+#lightbox-caption {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+@media (max-width: 40rem) {
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Animate only when the user has not requested reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+    #image-lightbox[open] {
+        animation: lightbox-appear 0.2s ease-out;
+    }
+
+    @keyframes lightbox-appear {
+        from {
+            opacity: 0;
+            transform: translateY(0.75rem);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}

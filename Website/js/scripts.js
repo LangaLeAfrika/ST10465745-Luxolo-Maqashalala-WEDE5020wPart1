@@ -117,4 +117,49 @@ function initialiseProgrammeFaqs() {
     });
 }
 
-initialiseProgrammeFaqs();
+    initialiseProgrammeFaqs();
+    function initialiseGallery() {
+        const lightbox = document.querySelector("#image-lightbox");
+        const largeImage = document.querySelector("#lightbox-image");
+        const caption = document.querySelector("#lightbox-caption");
+        const galleryLinks = document.querySelectorAll(".gallery-link");
+
+        if (!lightbox || !largeImage || !caption) {
+            return;
+        }
+
+        // Keep normal image links working if dialog support is unavailable.
+        if (typeof lightbox.showModal !== "function") {
+            return;
+        }
+
+        galleryLinks.forEach((link) => {
+            link.addEventListener("click", (event) => {
+                // Preserve Ctrl/Cmd-click and other modified link actions.
+                if (
+                    event.ctrlKey ||
+                    event.metaKey ||
+                    event.shiftKey ||
+                    event.altKey
+                ) {
+                    return;
+                }
+
+                const thumbnail = link.querySelector("img");
+
+                if (!thumbnail) {
+                    return;
+                }
+
+                event.preventDefault();
+
+                largeImage.src = link.href;
+                largeImage.alt = thumbnail.alt;
+                caption.textContent = thumbnail.alt;
+
+                lightbox.showModal();
+            });
+        });
+    }
+
+    initialiseGallery();
