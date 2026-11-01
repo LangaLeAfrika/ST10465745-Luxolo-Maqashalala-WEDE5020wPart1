@@ -98,3 +98,23 @@ function initialiseProgrammeSearch() {
 }
 
 initialiseProgrammeSearch();
+function initialiseProgrammeFaqs() {
+    const faqItems = document.querySelectorAll(".programme-faq details");
+
+    faqItems.forEach((selectedItem) => {
+        selectedItem.addEventListener("toggle", () => {
+            // Only close other answers when this answer has been opened.
+            if (!selectedItem.open) {
+                return;
+            }
+
+            faqItems.forEach((otherItem) => {
+                if (otherItem !== selectedItem) {
+                    otherItem.open = false;
+                }
+            });
+        });
+    });
+}
+
+initialiseProgrammeFaqs();

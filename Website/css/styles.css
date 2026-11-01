@@ -452,3 +452,47 @@ main img.hub-logo {
         grid-template-columns: 1fr;
     }
 }
+/* Part 3: expandable programme FAQs */
+.programme-faq {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+}
+
+.programme-faq details {
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    background-color: var(--background);
+}
+
+.programme-faq summary {
+    padding: 1rem;
+    color: var(--primary);
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.programme-faq summary:hover {
+    background-color: #e0ebe5;
+}
+
+.programme-faq summary:focus-visible {
+    outline: 3px solid #005fcc;
+    outline-offset: 3px;
+}
+
+.programme-faq details[open] summary {
+    border-bottom: 1px solid var(--border);
+}
+
+.programme-faq details p {
+    padding: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .programme-faq summary {
+        transition: none;
+    }
+}
