@@ -372,3 +372,83 @@ main img.hub-logo {
     height: auto;
     margin: 1.25rem auto 0;
 }
+/* =========================================
+   PART 3: PROGRAMME SEARCH AND CARDS
+   ========================================= */
+
+.programme-controls {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.25rem;
+    margin: 1.5rem 0;
+}
+
+.programme-controls > div {
+    min-width: 0;
+}
+
+.programme-controls input,
+.programme-controls select {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    background-color: var(--surface);
+    color: var(--text);
+    font: inherit;
+}
+
+.programme-controls input:hover {
+    border-color: var(--primary);
+}
+
+#programme-count {
+    margin-bottom: 1rem;
+    color: var(--muted);
+}
+
+.programme-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+}
+
+.programme-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    background-color: var(--background);
+}
+
+.programme-card p {
+    flex: 1;
+}
+
+.programme-card a {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.programme-empty {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 64rem) {
+    .programme-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 40rem) {
+    .programme-controls,
+    .programme-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Programmes - Eastern Cape Youth Skills Hub</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script src="js/scripts.js" defer></script>
 </head>
 <body>
 
@@ -23,18 +24,47 @@
 </header>
 
     <!-- Main Content Area -->
-    <main>
-        <section>
-            <h2>Skills Development Courses</h2>
-            <p>We provide comprehensive training programmes tailored to the needs of today's job market.</p>
-            
-            <ul>
-                <li><strong>Computer Literacy:</strong> Learn essential digital skills, software navigation, and basic troubleshooting.</li>
-                <li><strong>Job Readiness:</strong> Master CV writing, interview techniques, and professional workplace communication.</li>
-                <li><strong>Entrepreneurship:</strong> Discover how to start, manage, and grow your own small business.</li>
-            </ul>
-        </section>
-    </main>
+<main>
+    <section aria-labelledby="programmes-heading">
+        <h2 id="programmes-heading">Skills Development Courses</h2>
+        <p>
+            Explore programmes that help you build digital skills,
+            prepare for employment, and develop a business.
+        </p>
+
+        <div class="programme-controls">
+            <div>
+                <label for="programme-search">Search programmes</label>
+                <input
+                    type="search"
+                    id="programme-search"
+                    placeholder="Try computer, CV, or business">
+            </div>
+
+            <div>
+                <label for="programme-sort">Sort by name</label>
+                <select id="programme-sort">
+                    <option value="az">A–Z</option>
+                    <option value="za">Z–A</option>
+                </select>
+            </div>
+        </div>
+
+        <p id="programme-count" role="status"></p>
+
+        <!-- JavaScript inserts programme cards here. -->
+        <div id="programme-list" class="programme-grid"></div>
+
+        <noscript>
+            <p>
+                Please enable JavaScript to search our Computer Literacy,
+                Job Readiness, and Entrepreneurship programmes.
+                You can also <a href="contact.html">contact us</a>
+                for programme information.
+            </p>
+        </noscript>
+    </section>
+</main>
 
     <!-- Footer -->
     <footer>
