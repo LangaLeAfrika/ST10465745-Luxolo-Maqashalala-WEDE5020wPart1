@@ -266,3 +266,101 @@ function initialiseProgrammeFaqs() {
 }
 
 initialiseEnquiryForm();
+function initialiseContactForm() {
+    // Enter an email address you control before testing email drafts.
+    const recipientEmail = "st10465745@rcconnect.edu.za";
+
+    const form = document.querySelector("#contact-form");
+
+    if (!form) {
+        return;
+    }
+
+    const nameInput = document.querySelector("#contact-name");
+    const emailInput = document.querySelector("#contact-email");
+    const typeInput = document.querySelector("#contact-type");
+    const messageInput = document.querySelector("#contact-message");
+    const submitButton = document.querySelector("#contact-submit");
+    const status = document.querySelector("#contact-status");
+
+    if (
+        !nameInput ||
+        !emailInput ||
+        !typeInput ||
+        !messageInput ||
+        !submitButton ||
+        !status
+    ) {
+        return;
+    }
+
+    if (!recipientEmail) {
+        status.textContent =
+            "Email enquiries are not available yet. Please check back later.";
+        return;
+    }
+
+    form.action = `mailto:${recipientEmail}`;
+    form.noValidate = true;
+
+    form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        status.textContent = "";
+
+        nameInput.value = nameInput.value.trim();
+        emailInput.value = emailInput.value.trim();
+        messageInput.value = messageInput.value.trim();
+
+        nameInput.setCustomValidity(
+            nameInput.value.length < 2
+                ? "Please enter at least 2 characters for your name."
+                : ""
+        );
+
+        messageInput.setCustomValidity(
+            messageInput.value.length < 10
+                ? "Please enter a message of at least 10 characters."
+                : ""
+        );
+
+        if (!form.reportValidity()) {
+            return;
+        }
+
+        const subject =
+            `Skills Hub: ${typeInput.value}`;
+
+        const body = [
+            `Name: ${nameInput.value}`,
+            `Reply email: ${emailInput.value}`,
+            `Message type: ${typeInput.value}`,
+            "",
+            "Message:",
+            messageInput.value
+        ].join("\r\n");
+
+        const emailLink =
+            `${form.action}?subject=${encodeURIComponent(subject)}` +
+            `&body=${encodeURIComponent(body)}`;
+
+        // Request an email draft; do not claim the email has been sent.
+        window.location.href = emailLink;
+
+        status.textContent =
+            "An email draft has been requested. Review and send it in your email app. " +
+            "If nothing opens, check that an email app is configured. " +
+            "Your message remains in this form.";
+    });
+
+    form.addEventListener("input", (event) => {
+        if (typeof event.target.setCustomValidity === "function") {
+            event.target.setCustomValidity("");
+        }
+
+        status.textContent = "";
+    });
+
+    submitButton.disabled = false;
+}
+
+initialiseContactForm();
