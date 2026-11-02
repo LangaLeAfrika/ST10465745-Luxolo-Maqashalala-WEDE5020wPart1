@@ -439,3 +439,55 @@ function initialiseEnquiryForm() {
 }
 
 initialiseEnquiryForm();
+function initialiseTrainingMap() {
+    const mapContainer = document.querySelector("#training-map");
+    const mapStatus = document.querySelector("#map-status");
+
+    // Other pages do not contain a map.
+    if (!mapContainer || !mapStatus) return;
+
+    if (typeof window.L === "undefined") {
+        mapStatus.textContent =
+            "The map could not load. Please use the Google Maps link below.";
+        return;
+    }
+
+    // Approximate ETC campus location: latitude, longitude.
+    const location = [-33.8826, 25.56099];
+
+    const map = L.map(mapContainer, {
+        scrollWheelZoom: false
+    }).setView(location, 16);
+
+    const tiles = L.tileLayer(
+        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+            maxZoom: 19,
+            attribution:
+                '&copy; <a href="https://www.openstreetmap.org/copyright">' +
+                "OpenStreetMap</a> contributors"
+        }
+    );
+
+    tiles.on("tileerror", function () {
+        mapStatus.textContent =
+            "Some map images could not load. Check your connection " +
+            "or use the Google Maps link below.";
+    });
+
+    tiles.addTo(map);
+
+    const popup = document.createElement("p");
+    popup.textContent =
+        "Eastcape Training Centre (ETC), Spondo Street, Struandale. " +
+        "Proposed Skills Hub venue — approximate location.";
+
+    L.marker(location, {
+        title: "Eastcape Training Centre",
+        alt: "Approximate ETC campus location"
+    })
+        .addTo(map)
+        .bindPopup(popup);
+}
+
+initialiseTrainingMap();

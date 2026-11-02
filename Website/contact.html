@@ -4,8 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us - Eastern Cape Youth Skills Hub</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="js/scripts.js" defer></script>
+    <!-- Map styles -->
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+<!-- Your website styles -->
+<link rel="stylesheet" href="css/styles.css">
+
+<!-- Load the map library before your own JavaScript -->
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    defer></script>
+
+<script src="js/scripts.js" defer></script>
 </head>
 <body>
 
@@ -93,6 +105,40 @@
             id="contact-status"
             role="status"
             aria-live="polite"></p>
+            <div class="location-section">
+    <h2 id="location-heading">Our proposed training location</h2>
+
+    <p>
+        Eastcape Training Centre (ETC), Spondo Street,
+        Struandale, Gqeberha.
+    </p>
+
+    <p>
+        This student project uses ETC as its proposed venue.
+        The map shows an approximate campus location.
+    </p>
+
+    <div
+        id="training-map"
+        role="region"
+        aria-labelledby="location-heading">
+    </div>
+
+    <p id="map-status" role="status"></p>
+
+    <p>
+        <a
+            href="https://www.google.com/maps/search/?api=1&amp;query=Eastcape+Training+Centre+Spondo+Street+Struandale+Gqeberha"
+            target="_blank"
+            rel="noopener noreferrer">
+            View ETC in Google Maps (opens a new tab)
+        </a>
+    </p>
+
+    <noscript>
+        <p>Enable JavaScript to use the interactive map, or use the link above.</p>
+    </noscript>
+</div>
     </section>
 </main>
 
