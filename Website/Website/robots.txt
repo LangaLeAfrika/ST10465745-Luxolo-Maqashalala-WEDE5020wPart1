@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://langaleafrika.github.io/ST10465745-Luxolo-Maqashalala-WEDE5020wPart1/sitemap.xml
