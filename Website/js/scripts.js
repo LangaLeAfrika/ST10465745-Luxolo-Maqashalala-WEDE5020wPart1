@@ -265,47 +265,56 @@ function initialiseProgrammeFaqs() {
     checkButton.disabled = false;
 }
 
-initialiseEnquiryForm();
-function initialiseContactForm() {
-    // Enter an email address you control before testing email drafts.
-    const recipientEmail = "st10465745@rcconnect.edu.za";
-
-    const form = document.querySelector("#contact-form");
+function initialiseEnquiryForm() {
+    const form = document.querySelector("#enquiry-form");
 
     if (!form) {
         return;
     }
 
-    const nameInput = document.querySelector("#contact-name");
-    const emailInput = document.querySelector("#contact-email");
-    const typeInput = document.querySelector("#contact-type");
-    const messageInput = document.querySelector("#contact-message");
-    const submitButton = document.querySelector("#contact-submit");
-    const status = document.querySelector("#contact-status");
+    const nameInput = document.querySelector("#enquiry-name");
+    const emailInput = document.querySelector("#enquiry-email");
+    const interestInput = document.querySelector("#enquiry-interest");
+    const messageInput = document.querySelector("#enquiry-message");
+    const submitButton = document.querySelector("#enquiry-check");
+    const result = document.querySelector("#enquiry-result");
 
     if (
         !nameInput ||
         !emailInput ||
-        !typeInput ||
+        !interestInput ||
         !messageInput ||
         !submitButton ||
-        !status
+        !result
     ) {
         return;
     }
 
-    if (!recipientEmail) {
-        status.textContent =
-            "Email enquiries are not available yet. Please check back later.";
-        return;
-    }
+    const responses = {
+        computer:
+            "Computer Literacy covers essential digital skills, software navigation, and basic troubleshooting.",
+        job:
+            "Job Readiness covers CV preparation, interview techniques, and workplace communication.",
+        business:
+            "Entrepreneurship introduces starting, managing, and growing a small business.",
+        volunteer:
+            "Your volunteering enquiry can help us discuss your skills and availability.",
+        sponsor:
+            "Your sponsorship enquiry can help us discuss the support you would like to offer."
+    };
 
-    form.action = `mailto:${recipientEmail}`;
+    let isSending = false;
     form.noValidate = true;
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
         event.preventDefault();
-        status.textContent = "";
+
+        // Prevent repeated clicks from creating simultaneous submissions.
+        if (isSending) {
+            return;
+        }
+
+        result.replaceChildren();
 
         nameInput.value = nameInput.value.trim();
         emailInput.value = emailInput.value.trim();
@@ -313,43 +322,109 @@ function initialiseContactForm() {
 
         nameInput.setCustomValidity(
             nameInput.value.length < 2
-                ? "Please enter at least 2 characters for your name."
+                ? "Please enter a name containing at least 2 characters."
                 : ""
         );
 
         messageInput.setCustomValidity(
             messageInput.value.length < 10
-                ? "Please enter a message of at least 10 characters."
+                ? "Please enter at least 10 characters explaining your enquiry."
                 : ""
+        );
+
+        interestInput.setCustomValidity(
+            Object.hasOwn(responses, interestInput.value)
+                ? ""
+                : "Please select an enquiry option."
         );
 
         if (!form.reportValidity()) {
             return;
         }
 
-        const subject =
-            `Skills Hub: ${typeInput.value}`;
+        // Capture the submitted details before disabling the fields.
+        const selectedInterest = interestInput.value;
+        const formData = new FormData(form);
 
-        const body = [
-            `Name: ${nameInput.value}`,
-            `Reply email: ${emailInput.value}`,
-            `Message type: ${typeInput.value}`,
-            "",
-            "Message:",
-            messageInput.value
-        ].join("\r\n");
+        formData.set(
+            "interest",
+            interestInput.options[interestInput.selectedIndex].text
+        );
 
-        const emailLink =
-            `${form.action}?subject=${encodeURIComponent(subject)}` +
-            `&body=${encodeURIComponent(body)}`;
+        const controls = Array.from(form.elements);
+        const previousDisabledStates =
+            controls.map((control) => control.disabled);
 
-        // Request an email draft; do not claim the email has been sent.
-        window.location.href = emailLink;
+        isSending = true;
+        controls.forEach((control) => {
+            control.disabled = true;
+        });
 
-        status.textContent =
-            "An email draft has been requested. Review and send it in your email app. " +
-            "If nothing opens, check that an email app is configured. " +
-            "Your message remains in this form.";
+        submitButton.textContent = "Sending…";
+        form.setAttribute("aria-busy", "true");
+        result.textContent = "Sending your enquiry. Please wait.";
+
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 20000);
+
+        try {
+            const response = await fetch(form.action, {
+                method: "POST",
+                body: formData,
+                headers: {
+                    Accept: "application/json"
+                },
+                signal: controller.signal
+            });
+
+            if (!response.ok) {
+                result.textContent =
+                    "The submission service did not accept your enquiry. " +
+                    "Your details have been kept. Please try again later " +
+                    "or use the Contact page.";
+                return;
+            }
+
+            const heading = document.createElement("h3");
+            heading.textContent = "Enquiry submitted successfully";
+
+            const confirmation = document.createElement("p");
+            confirmation.textContent =
+                "The submission service has accepted your enquiry.";
+
+            const guidance = document.createElement("p");
+            guidance.textContent = responses[selectedInterest];
+
+            const availability = document.createElement("p");
+            availability.textContent =
+                "Dates, fees, available places, and participation " +
+                "arrangements still need confirmation from the Hub.";
+
+            result.replaceChildren(
+                heading,
+                confirmation,
+                guidance,
+                availability
+            );
+
+            // Clear fields only after a successful server response.
+            form.reset();
+        } catch (error) {
+            result.textContent =
+                "We could not confirm whether your enquiry was received. " +
+                "Your details have been kept. Check your connection before " +
+                "trying again; retrying may create a duplicate enquiry.";
+        } finally {
+            clearTimeout(timeoutId);
+
+            controls.forEach((control, index) => {
+                control.disabled = previousDisabledStates[index];
+            });
+
+            submitButton.textContent = "Send enquiry";
+            form.removeAttribute("aria-busy");
+            isSending = false;
+        }
     });
 
     form.addEventListener("input", (event) => {
@@ -357,10 +432,10 @@ function initialiseContactForm() {
             event.target.setCustomValidity("");
         }
 
-        status.textContent = "";
+        result.replaceChildren();
     });
 
     submitButton.disabled = false;
 }
 
-initialiseContactForm();
+initialiseEnquiryForm();
