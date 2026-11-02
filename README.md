@@ -83,19 +83,19 @@ tests on physical mobile or tablet devices.
 
 ### Home: Desktop
 
-![Home page at desktop size](screenshots/home-desktop.png)
+![Home page at desktop size](Screenshots/home-desktop.png)
 
 ### Home: Tablet
 
-![Home page at tablet size](screenshots/home-tablet.png)
+![Home page at tablet size](Screenshots/home-tablet.png)
 
 ### Home: Mobile
 
-![Home page at mobile size](screenshots/home-mobile.png)
+![Home page at mobile size](Screenshots/home-mobile.png)
 
 ### Registration: Mobile
 
-![Registration page at mobile size](screenshots/registration-mobile.png)
+![Registration page at mobile size](Screenshots/registration-mobile.png)
 
 ### Issues Investigated
 
@@ -111,3 +111,25 @@ tests on physical mobile or tablet devices.
 
 The registration form is a front-end prototype. It is not connected to
 a database or registration-processing service.
+
+## References
+
+Basques, K. and Emelianova, S. (n.d.) *Simulate mobile devices with device mode*.
+Available at: https://developer.chrome.com/docs/devtools/device-mode
+(Accessed: September 2026).
+
+MDN Web Docs (n.d.-a) *Responsive web design*.
+Available at: https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Responsive_Design
+(Accessed: September 2026).
+
+MDN Web Docs (n.d.-b) *The HTML picture element*.
+Available at: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/picture
+(Accessed: September 2026).
+
+## Image Credits
+
+The Eastern Cape Youth Skills Hub logo (`EC_logo.png`) was generated
+using OpenAI’s ChatGPT for this student project.
+
+The files `EC_logo-small.png` and `EC_logo-medium.png` were resized
+from the original AI-generated image for responsive display.
