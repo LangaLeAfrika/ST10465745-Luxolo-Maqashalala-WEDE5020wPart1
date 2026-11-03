@@ -28,7 +28,6 @@ or a confirmed partnership.
 * /Chosen Proposal: Contains the final rationale (Chosen Proposal.txt) for selecting the Eastern Cape Youth Skills Hub.
 * /Proposals: Contains the initial comparison (Proposals guide.txt) between the two candidate organisations (Eastern Cape Youth Skills Hub and Handyman Services).
 * /Research: Contains the target audience analysis, user needs, and design strategy (research guide.txt).
-* /Website: Contains the foundational HTML structure for the 5-page website prototype, including the images directory.
 * /Website: Contains six HTML pages, shared CSS, JavaScript, images,
   sitemap.xml and a project copy of robots.txt.
 * /Screenshots: Contains responsive layout and Part 3 testing evidence.
@@ -315,7 +314,7 @@ source code remains in the original assignment repository.
 
 ### Testing Evidence
 
-The developer reported testing the forms and saving screenshot evidence.
+I tested the forms and saved screenshot evidence.
 The following evidence records specific views and outcomes; screenshots
 alone do not prove that every interaction or error case passed.
 
