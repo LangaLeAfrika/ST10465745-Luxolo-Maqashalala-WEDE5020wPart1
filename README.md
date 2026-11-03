@@ -270,9 +270,10 @@ The live homepage was audited using Chrome DevTools Lighthouse.
 These are individual laboratory audit results, not measurements from
 real visitors. Scores can vary between runs.
 
-The desktop performance result requires further investigation using
-the report's metrics and diagnostic findings. No cause or improvement
-is claimed before that investigation.
+The desktop performance audit scored 78. Lighthouse flagged image
+delivery for EC_logo-medium.png (approximately 297 KiB) and cache
+lifetimes. Further image compression remains a future improvement.
+The mobile performance audit scored 98.
 
 Automated accessibility, best-practice, and SEO scores do not replace
 manual testing or constitute a complete security assessment.
